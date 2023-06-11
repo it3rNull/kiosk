@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <h1>Welcome to the Restaurant!</h1>
+    <div class="my-5">
+      <a href="{{ url_for('orders') }}" class="btn btn-primary btn-lg mr-3">Orders</a>
+      <a href="{{ url_for('menu', category='오뎅탕') }}" class="btn btn-success btn-lg mr-3">오뎅탕</a>
+      <a href="{{ url_for('menu', category='삼겹숙주') }}" class="btn btn-warning btn-lg mr-3">삼겹숙주</a>
+      <a href="{{ url_for('menu', category='닭꼬치') }}" class="btn btn-danger btn-lg mr-3">닭꼬치</a>
+      <a href="{{ url_for('menu', category='골뱅이소면') }}" class="btn btn-danger btn-lg mr-3">골뱅이소면</a>
+      <a href="{{ url_for('menu', category='음료') }}" class="btn btn-secondary btn-lg">음료</a>
+      <a href="{{ url_for('tables') }}" class="btn btn-secondary btn-lg">테이블</a>
+    </div>
+  </div>
+</body>
+</html>

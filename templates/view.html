@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQLite3 Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Main Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('orders') }}">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu', category='오뎅탕') }}">오뎅탕</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu', category='삼겹숙주볶음') }}">삼겹숙주</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu', category='닭꼬치') }}">닭꼬치</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu', category='골뱅이소면') }}">골뱅이소면</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu', category='음료') }}">음료</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('done') }}">Done</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('deleted') }}">Deleted</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tables">Tables</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/payments">Payments</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Orders</h1>
+        <div class="row">
+            {% for order in orders %}
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <form action="{{ url_for('delete_order', order_id=order[0]) }}" method="POST" style="display: inline-block; float: right;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this order?')">Delete</button>
+                        </form>
+                        <form action="{{ url_for('done_orders', order_id=order[0]) }}" method="POST" style="display: inline-block;">
+                            <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Done?')">Done</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Table {{ order[1] }}</h5>
+                        <p class="card-text">Menu: {{ order[2] }}</p>
+                        {% if order[5] != None %}
+                        <p class="card-text">{{ order[5] }}</p>
+                        {% endif %}
+                        <p class="card-text">Time: {{ order[4] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entrance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Entrance</h1>
+        <form method="POST" action="/enter">
+            <div class="row">
+                {% for i in range(1, 11) %}
+                <div class="col-2 mb-3">
+                    <button type="submit" name="people" value="{{ i }}" class="btn btn-primary btn-block">{{ i }}명</button>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

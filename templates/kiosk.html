@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiosk</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        table {
+            font-size: 1.2rem;
+        }
+        .total-price {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tables">Tables</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/payments">Payments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/orders">Orders</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Table {{ table_num }}</h1>
+            <div class="row">
+                {% for item in menu["menus"] %}
+                    {%if item["name"] not in ["닭꼬치","토닉"] %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <div class="card">
+                                <div class="card-header">{{ item["name"] }}</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item["price"] }} won</h5>
+                                    <form action="{{ url_for('add_order') }}" method="POST" style="display: inline-block;">
+                                        <input type="hidden" name="table_num" value="{{ table_num }}">
+                                        <input type="hidden" name="menu_name" value="{{ item['name'] }}">
+                                        <input type="hidden" name="price" value="{{ item['price'] }}">
+                                        <button type="submit" class="btn btn-primary btn-block">Add to Order</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% if loop.index % 4 == 0 %}
+                            </div><div class="row">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">닭꼬치</div>
+                        <div class="card-body">
+                                <h5 class="card-title">9,000 won</h5>
+                                <div>
+                                    <form action="{{ url_for('add_chicken') }}" method="POST">
+                                    <input type="hidden" name="table_num" value="{{ table_num }}">
+                                    <input type="hidden" name="menu_name" value="닭꼬치">
+                                    <input type="hidden" name="price" value=9000>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="데리">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">데리</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="치즈">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">치즈</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="청양">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">청양</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="불닭">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">불닭</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="토핑추가">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">토핑추가</h5>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Add to Order</button>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">토닉</div>
+                        <div class="card-body">
+                                <h5 class="card-title">5,000 won</h5>
+                                <div>
+                                    <form action="{{ url_for('add_chicken') }}" method="POST">
+                                    <input type="hidden" name="table_num" value="{{ table_num }}">
+                                    <input type="hidden" name="menu_name" value="토닉">
+                                    <input type="hidden" name="price" value=5000>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="와인">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">와인</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="레몬">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">레몬</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="블루오션">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">블루오션</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="자몽">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">자몽</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="블루베리">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">블루베리</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="모히또">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">모히또</h5>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="toppings[]" value="샤인머스캣">
+                                        <label class="form-check-label" for="toppings">
+                                        <h5 class="card-title">샤인머스캣</h5>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Add to Order</button>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>Table {{ table_num }} Orders</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Menu Name</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in menu["menus"] %}
+                    <tr>
+                        <td>{{ item["name"]}}</td>
+                        <td>
+                            <div class="quantity">
+                                <form action="{{ url_for('dec') }}" method="POST" style="display: inline-block;">
+                                    <input type="hidden" name="table_num" value="{{ table_num }}">
+                                    <input type="hidden" name="menu_name" value="{{ item['name'] }}">
+                                    <input type="hidden" name="price" value="{{ item['price'] }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">-</button>
+                                </form>
+                                <span class="mr-2">{{tbl_order[item["name"]]}}</span>
+                                <form action="{{ url_for('inc') }}" method="POST" style="display: inline-block;">
+                                    <input type="hidden" name="table_num" value="{{ table_num }}">
+                                    <input type="hidden" name="menu_name" value="{{ item['name'] }}">
+                                    <input type="hidden" name="price" value="{{ item['price'] }}">
+                                    <button type="submit" class="btn btn-primary btn-sm mr-2">+</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>Total Price:</td>
+                        <td class="total-price">{{ total_price }} won</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <form action="/pay" method="POST">
+                <input type="hidden" name="table_num" value="{{ table_num }}">
+                <input type="hidden" name="total_price" value="{{ total_price }}">
+                <button type="submit" class="btn btn-success btn-block">Calculate and Pay</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
